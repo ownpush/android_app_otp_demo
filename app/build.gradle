@@ -1,0 +1,69 @@
+/*
+ * The MIT License (MIT)
+ * Copyright (c) 2016 Fastboot Mobile LLC.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+
+apply plugin: 'com.android.model.application'
+
+model {
+    android {
+        compileSdkVersion 23
+        buildToolsVersion "23.0.2"
+
+        defaultConfig {
+            applicationId "com.fastbootmobile.twofactorauthdemo"
+            minSdkVersion.apiLevel 21
+            targetSdkVersion.apiLevel 23
+            versionCode 1
+            versionName "1.0"
+        }
+    }
+
+    android.buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles.add(file('proguard-rules.pro'))
+        }
+    }
+
+    android.productFlavors {
+        create("demo") {
+            buildConfigFields {
+                create() {
+                    type "String"
+                    name "APP_PUBLIC_KEY"
+                    value "\"a1188f3054f144d990e07e00ce341ee9f526e50d10a416c566f77a0d62c2006d\""
+                }
+            }
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.joshdholtz.sentry:sentry-android:1.2.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile project(':ownpushclient-all-debug')
+    compile project(':tweetnacl-all-debug')
+}
